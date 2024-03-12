@@ -301,8 +301,13 @@ function createHtmlFileList(files, dir, useIcons, view) {
       ? file.stat.size
       : '';
 
+    // Use relative paths in dir listing. Addresses
+    // https://github.com/expressjs/serve-index/issues/90
+    // Also add trailing slash.
+    path = path.slice(-1).join('/') + "/";
+
     return '<li><a href="'
-      + escapeHtml(normalizeSlashes(normalize(path.join('/'))))
+      + escapeHtml(path)
       + '" class="' + escapeHtml(classes.join(' ')) + '"'
       + ' title="' + escapeHtml(file.name) + '">'
       + '<span class="name">' + escapeHtml(file.name) + '</span>'
